@@ -12,24 +12,24 @@ app.use(
   })
 );
 
-app.post('/Thomas/drugs', (req, res) => {
-
-  connection.query("INSERT INTO drug SET ? ", [req.body], (err, results) => {
-
-    if (err) {
-      res.status(500).send('erreur lors de la sauvegarde des données' + err);
-    } else {
-      res.status(200).send(results);
-    }
-
-
-  })
-
-})
 
 app.get("/", (request, response) => {
   response.send("Hello");
 });
+
+
+app.use("/Thomas/drugs", require("./routes/drugs"));
+app.use("/Thomas/drugs/:id", require("./routes/drugs"));
+
+app.use("/Thomas/rappel", require("./routes/rappel"));
+
+app.use("/Jean/createUser", require("./routes/user"))
+app.use("/Isabelle/upDate/:id", require("./routes/user"))
+app.use("/Sebastien/delUser/:id", require("./routes/user"))
+
+
+
+
 
 app.listen(port, (err) => {
   if (err) {
