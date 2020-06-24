@@ -1,4 +1,5 @@
 const express = require('express');
+const connection = require('../conf');
 const router = express.Router();
 
 
@@ -24,10 +25,10 @@ router.post('/Thomas/drugs', (req, res) => {
 
 
 router.put('/Thomas/drugs/:id', (req, res) => {
-    const version = req.params.id
+
 
     connection.query(" UPDATE drug SET id = ?",
-        version, (err, results) => {
+        [req.params.id], (err, results) => {
             if (err) {
 
                 res.status(500).send('Erreur lors de la sauvegarde des données' + err);
