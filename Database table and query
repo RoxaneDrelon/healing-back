@@ -1,0 +1,71 @@
+--- TABLES --------
+
+----USER------
+
+CREATE TABLE `user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+
+
+---- DRUG ------
+
+CREATE TABLE `drug` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `medecine` varchar(50) NOT NULL,
+  `administration_mode` longtext NOT NULL,
+  `date_start` date NOT NULL,
+  `date_end` date NOT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id_idx` (`user_id`),
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+)
+
+
+--------- RAPPEL -------
+
+CREATE TABLE `rappel` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `alert_name` varchar(45) NOT NULL,
+  `medecine_quantity` varchar(45) NOT NULL,
+  `pickup_time` time NOT NULL,
+  `userid` int NOT NULL,
+  `drug_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userid_idx` (`userid`),
+  KEY `prescription_id_idx` (`drug_id`),
+  CONSTRAINT `prescription_id` FOREIGN KEY (`drug_id`) REFERENCES `drug` (`id`),
+  CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `user` (`id`)
+)
+
+
+--------------- QUERY -----------------
+
+user--------
+
+INSERT into USER 
+values
+(0,'Maurice','xe58bB'),
+(0,'Thomas','fgT88o'),
+(0,'Isabelle','tVb011'),
+(0,'Suzy','Fgkkl7'),
+(0,'Sebastien','Vwer880');
+
+drug -----------
+
+insert into drug values
+(0,'Doliprane 500 mg','orale','2020-05-06','2020-05-16','2'),
+(0,'Dafalgan 1000 mg','orale','2020-05-18','2020-05-22','1'),
+(0,'Dafalgan codéiné 500 mg',	'orale','2020-05-06','2020-05-16','4'),
+(0,'Trophires Adultes','rectale','2020-01-10','2020-01-20','5'),
+(0,'Euphon sirop','orale','2020-03-18','2020-03-30','3');
+
+
+
+
+
+
+
