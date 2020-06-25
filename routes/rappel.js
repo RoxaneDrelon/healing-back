@@ -2,6 +2,17 @@ const express = require("express");
 const connection = require("../conf");
 const router = express.Router();
 
+// bonus: GET tous les rappels
+router.get("/all", (req, res) => {
+  connection.query(" SELECT * FROM rappel", (err, results) => {
+    if (err) {
+      res.status(500).send("Erreur lors de la récupération des données" + err);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
 // GET tous les rappels pour un médicament
 router.get("/:id", (req, res) => {
   const idDrug = req.params.id;
