@@ -12,6 +12,7 @@ router.get("/users", (req, res) => {
   });
 });
 
+// GET tous les médicaments d'un user
 router.get("/", (req, res) => {
   const nameUser = req.query.username;
   connection.beginTransaction(() => {
