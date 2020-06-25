@@ -11,11 +11,9 @@ app.use(
   })
 );
 
-
 app.get("/", (request, response) => {
   response.send("Hello");
 });
-
 
 app.use("/drugs", require("./routes/drugs"));
 //app.use("/Thomas/drugs/:id", require("./routes/drugs"));
@@ -26,8 +24,6 @@ app.use("/rappel", require("./routes/rappel"));
 //app.use("/Sebastien/delUser/:id", require("./routes/user"))
 
 app.use("/users", require("./routes/user"));
-
-
 
 app.listen(port, (err) => {
   if (err) {
