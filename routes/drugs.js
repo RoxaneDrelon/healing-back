@@ -2,6 +2,16 @@ const express = require("express");
 const connection = require("../conf");
 const router = express.Router();
 
+router.get("/users", (req, res) => {
+  connection.query(" SELECT * FROM user", (err, results) => {
+    if (err) {
+      res.status(500).send("Erreur lors de la sauvegarde des données" + err);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
 router.get("/", (req, res) => {
   const nameUser = req.query.username;
   connection.beginTransaction(() => {
@@ -24,11 +34,13 @@ router.get("/", (req, res) => {
             if (errIns1) {
               connection.rollback();
               return res.status(500).send("Erreur lors de l'insertion" + err);
+            } else {
+              res.status(200).json(resultIns1); // ici
             }
           }
         );
         connection.end();
-        return res.status(200).send(resultIns1);
+        //return res.status(200).json(res);
       }
     );
   });
