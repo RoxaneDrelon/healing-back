@@ -1,15 +1,26 @@
 const express = require('express');
 const router = express.Router();
 
+// Répond à ces routes
+// GET /rappel
+// GET /rappel?idUser=42
+router.get('/', (req, res) => {
+    let sqlRequest = "SELECT * FROM rappel";
+    if (req.query.idUser) {
+        sqlRequest += " WHERE id_user=?"
+    }
+
+    connection.query(sqlRequest, [req.query.idUser], (err, res) => {
+
+    })
+})
 
 
-router.post('/Thomas/rappel', (req, res) => {
-
-
+router.post('/', (req, res) => {
     connection.query(
 
 
-        " INSERT INTO rappel SET ?", [req.body],
+        "INSERT INTO rappel SET ?", [req.body],
 
         (err, results) => {
 
@@ -22,3 +33,5 @@ router.post('/Thomas/rappel', (req, res) => {
         })
 
 })
+
+module.exports = router;

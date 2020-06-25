@@ -3,7 +3,7 @@ const connection = require('../conf');
 const router = express.Router();
 
 
-router.post('/Jean/createUser', (req, res) => {
+router.post('/', (req, res) => {
 
 
     connection.query(
@@ -24,7 +24,7 @@ router.post('/Jean/createUser', (req, res) => {
 })
 
 
-router.put('/Isabelle/upDate/:id', (req, res) => {
+router.put('/:id', (req, res) => {
 
 
     connection.query(" UPDATE user SET id = ?",
@@ -39,7 +39,7 @@ router.put('/Isabelle/upDate/:id', (req, res) => {
 })
 
 
-app.delete('/Sebastien/delUser/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
 
 
     connection.query("DELETE FROM user where id = ?", [req.params.id], (err, results) => {
@@ -51,3 +51,5 @@ app.delete('/Sebastien/delUser/:id', (req, res) => {
         }
     })
 })
+
+module.exports = router;
