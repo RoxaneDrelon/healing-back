@@ -59,15 +59,14 @@ router.get("/", (req, res) => {
   });
 });
 
-// repond à POST /drugs
-// repond (?) à POST /drugs?username=Paulo
+// POST un nouveau médicament pour un user
 router.post("/", (req, res) => {
   const nameUser = req.query.username;
   //-----begin transaction --------
 
   connection.beginTransaction(() => {
     connection.query(
-      "SELECT id FROM user WHERE name=?",
+      "SELECT id FROM user WHERE username=?",
       [nameUser],
       (errSelect, resSelect) => {
         if (errSelect) {
@@ -81,25 +80,13 @@ router.post("/", (req, res) => {
         connection.query(
           " INSERT INTO drug SET ?",
           [req.body],
-          (errIns1, resultIns1) => {
-            if (errIns1) {
+          (errIns, resultIns) => {
+            if (errIns) {
               connection.rollback();
-              return res.status(500).send("Erreur lors de l'insertion" + err);
+              return res
+                .status(500)
+                .send("Erreur lors de l'insertion" + errIns);
             }
-            //
-            // deplacer sur la prtie rappel
-            connection.query(
-              "INSERT INTO rappel SET ?",
-              [req.body],
-              (errIns2, resultIns2) => {
-                if (errIns2) {
-                  connection.rollback();
-                  return res
-                    .status(500)
-                    .send("Erreur lors de l'insertion" + err);
-                }
-              }
-            );
             connection.end();
             return res.status(200).send("Operation successful");
           }
