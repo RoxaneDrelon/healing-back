@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const port = 7070;
+const cors = require("cors");
+
+app.use(cors());
 
 // Support JSON-encoded bodies
 app.use(express.json());
