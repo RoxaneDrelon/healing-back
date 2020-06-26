@@ -48,11 +48,12 @@ router.get("/", (req, res) => {
               connection.rollback();
               return res.status(500).send("Erreur lors de l'insertion" + err);
             } else {
-              res.status(200).json(resultIns1); // ici
+              connection.commit();
+              return res.status(200).json(resultIns1); // ici
             }
           }
         );
-        connection.end();
+
         //return res.status(200).json(res);
       }
     );
@@ -86,9 +87,10 @@ router.post("/", (req, res) => {
               return res
                 .status(500)
                 .send("Erreur lors de l'insertion" + errIns);
+            } else {
+              connection.commit();
+              return res.status(200).send("Operation successful");
             }
-            connection.end();
-            return res.status(200).send("Operation successful");
           }
         );
       }
